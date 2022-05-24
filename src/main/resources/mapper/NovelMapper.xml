@@ -7,7 +7,7 @@
         SELECT
         NOVEL_NUMBER ,
         n.USER_NUMBER,
-        U.USER_NICKNAME,
+        u.USER_NICKNAME,
         NOVEL_TITLE ,
         NOVEL_HASHTAG ,
         NOVEL_UPLOADDATE ,
@@ -78,14 +78,14 @@
             <when test="rankType == 'like'.toString()">NOVEL_LIKECOUNTTOTAL</when>
         </choose>
         DESC
-        LIMIT 50 ;
+        LIMIT 50
     </select>
 
     <select id="rankingSearchOfDay" resultType="NovelRankingDTO">
         SELECT
         NOVEL_NUMBER ,
         n.USER_NUMBER,
-        U.USER_NICKNAME,
+        u.USER_NICKNAME,
         NOVEL_TITLE ,
         NOVEL_HASHTAG ,
         NOVEL_UPLOADDATE ,
@@ -143,7 +143,7 @@
             <when test="rankType == 'like'.toString()">NOVEL_LIKECOUNTTOTAL</when>
         </choose>
         DESC
-        LIMIT 50 ;
+        LIMIT 50
     </select>
 
 

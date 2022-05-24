@@ -61,7 +61,7 @@ public class NovelRankingController {
         model.addAttribute("rankingList",rankingList);
         model.addAttribute( "resultTotal", rankingList.size());
         model.addAttribute( "criteria", novelRankingCriteria);
-        return "/novel/ranking/novelRanking";
+        return "novel/ranking/novelRanking";
     }
 
     @LogStatus
@@ -85,7 +85,7 @@ public class NovelRankingController {
         model.addAttribute("rankingList",rankingList);
         model.addAttribute( "resultTotal", rankingList.size());
         model.addAttribute( "criteria", novelRankingCriteria);
-        return "/novel/ranking/novelRanking";
+        return "novel/ranking/novelRanking";
     }
 
     @LogStatus
@@ -110,7 +110,7 @@ public class NovelRankingController {
         model.addAttribute("rankingList",rankingList);
         model.addAttribute( "resultTotal", rankingList.size());
         model.addAttribute( "criteria", novelRankingCriteria);
-        return "/novel/ranking/novelRankingOfDay";
+        return "novel/ranking/novelRankingOfDay";
     }
 
 /*    @LogStatus

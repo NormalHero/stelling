@@ -69,6 +69,9 @@ public class NovelService {
     /* 페이징처리 전체조회*/
     @Transactional
     public Page<NovelCategoryDTO> getList(Pageable pageable){
+        log.info("들어옴2");
+        novelRepository.findAll(pageable).forEach(e -> log.info("####"+e.toString()));
+        log.info("@@@@@");
 //        novelRepository.findAll(pageable).map(objectEntity -> modelMapper.map(objectEntity, NovelCategoryDTO.class));
         return  novelRepository.findAll(pageable).map(objectEntity -> modelMapper.map(objectEntity, NovelCategoryDTO.class));
     }
