@@ -107,13 +107,13 @@ public class AttachController {
     @GetMapping("/display")
     @ResponseBody
     public byte[] getFile(String fileName) throws IOException{
-        return FileCopyUtils.copyToByteArray(new File("C:/upload/" + fileName));
+        return FileCopyUtils.copyToByteArray(new File("/home/ubuntu/stelling/upload/" + fileName));
     }
 
     @GetMapping("/download")
     @ResponseBody
     public ResponseEntity<Resource> download(String fileName){
-        Resource resource = new FileSystemResource("C:/upload/" + fileName);
+        Resource resource = new FileSystemResource("/home/ubuntu/stelling/upload/"+ fileName);
         HttpHeaders header = new HttpHeaders();
         String name = resource.getFilename();
         name = name.substring(name.indexOf("_") + 1);
