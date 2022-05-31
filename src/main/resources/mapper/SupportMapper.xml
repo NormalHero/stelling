@@ -16,11 +16,11 @@
     <update id="update"></update>
 
     <!--후원 내역-->
-    <select id="getSupportList" resultType="supportVO">
-            SELECT SUPPORT_NUMBER, USER_NUMBER, NOVEL_NUMBER, SUPPORT_COIN, SUPPORT_DATE
+    <select id="getSuppotList" resultType="supportVO">
+            SELECT USER_NUMBER, USER_NUMBER, NOVEL_NUMBER, SUPPORT_COIN, SUPPORT_DATE
             FROM TBL_SUPPORT
             WHERE USER_NUMBER = #{userNumber}
-            ORDER BY SUPPORT_NUMBER DESC
+            ORDER BY USER_NUMBER DESC
             LIMIT #{paging.skip}, #{paging.amount}
     </select>
 
@@ -37,9 +37,6 @@
         WHERE USER_NUMBER = #{userNumber}
         GROUP BY USER_NUMBER
     </select>
-    <select id="getSupportListWithNovelNumber" resultType="supportVO">
-     select SUPPORT_NUMBER,USER_NUMBER, NOVEL_NUMBER,SUBNOVEL_NUMBER,SUPPORT_COIN,SUPPORT_DATE from TBL_SUPPORT
-    where NOVEL_NUMBER = #{novelNumber};
-    </select>
+
 
 </mapper>
