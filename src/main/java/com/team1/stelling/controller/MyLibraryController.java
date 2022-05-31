@@ -23,7 +23,6 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -90,11 +89,8 @@ public class MyLibraryController {
         log.info("userNumber + " + userNumber + "********");
         NumberFormat numberFormat = NumberFormat.getInstance();
         String payChargeTotal = null;
-        Long result = 0L;
-        if(payService.getTotal(userNumber) != null){
-           result = payService.getTotal(userNumber).getChargeTotal();
-        }
-
+        Long result = payService.getTotal(userNumber).getChargeTotal();
+        if(request == null){result = 0L;}
         payChargeTotal = numberFormat.format(result);
         log.info("총 결제 금액" + payChargeTotal);
         log.info(paging.toString());
@@ -119,10 +115,8 @@ public class MyLibraryController {
         HttpSession session = request.getSession();
         Long userNumber = (Long) session.getAttribute("userNumber");
         NumberFormat numberFormat = NumberFormat.getInstance();
-        String  supportCoinTotal = "0";
-        if(supportService.getSupportCoinTotal(userNumber) != null){
-            supportCoinTotal = numberFormat.format(supportService.getSupportCoinTotal(userNumber).getSupportTotal());
-        }
+        String supportCoinTotal = numberFormat.format(supportService.getSupportCoinTotal(userNumber).getSupportTotal());
+        log.info("총 후원 코인" + supportCoinTotal);
 
         int total = supportService.getSearchSupportTotal(paging);
 

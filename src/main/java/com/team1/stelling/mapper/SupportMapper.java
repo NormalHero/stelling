@@ -16,7 +16,7 @@ public interface SupportMapper {
     public SupportVO read(Long supportNumber);
 
     //후원 내역
-    public List<SupportVO> getSupportList(Paging paging, Long userNumber);
+    public List<SupportVO> getSuppotList(Paging paging, Long userNumber);
     
     //검색한 결과의 총 개수
     public int getSearchSupportTotal(Paging paging);
