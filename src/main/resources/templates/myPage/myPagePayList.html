@@ -12,7 +12,7 @@
 <body>
 <!-- 헤더 시작 -->
 
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 
 <!--헤더 이미지-->
 <div id="headerImgWrap" >
@@ -26,57 +26,58 @@
                 <div class="left_block">
                     <ul class="liWrap">
                         <li class="li_top left">
-                            <a href="myPageEditProfile.html">프로필 수정</a>
+                            <a class="menu" href="javascript:goEditProfile();">프로필 수정</a>
                         </li>
                         <li class="left">
-                            <a class="menu" href="myPageMyWork.html">내 작품 관리</a>
+                            <a class="menu" href="javascript:goMyWork();">내 작품 관리</a>
                         </li>
                         <li class="left">
-                            <a class="menu" href="myPageChangePw.html">비밀번호 변경</a>
+                            <a class="menu" href="javascript:goChangePw();">비밀번호 변경</a>
                         </li>
                         <li class="left">
-                            <a class="menu" href="myPageQuestion.html">내 문의 내역</a>
+                            <a class="menu" href="javascript:goQuestion();">내 문의 내역</a>
                         </li>
                         <li class="left">
-                            <a class="menu" href="myPageQuit.html">탈퇴 하기</a>
+                            <a class="menu" href="javascript:goQuit();">탈퇴 하기</a>
                         </li>
                         <li class="left">
-                            <a class="menu payment" href="javascript:void(0);">결제</a>
+                            <a class="menu" href="javascript:goPayList();">결제</a>
                         </li>
                     </ul>
                 </div>
                 <div class="right_block">
                     <div class="">
-                        <div class="profile_text"><strong>최근 구매/후원 내역 </strong></div>
+                        <div class="profile_text"><strong>최근 구매 내역 </strong></div>
                         <table class="listWrap">
                             <tbody>
                             <tr>
                                 <td class="active1 one" style="width: 50%">
-                                    <div class="active myPoint">내 포인트</div>
+                                    <a href="/myLibrary/payList" style="border-bottom: 1px solid #ef6e73b3;"><div class="active myPoint">내 포인트</div></a>
                                 </td>
                                 <td class="active2" style="width: 50%">
-                                    <div class="active mySupport"> 내 후원 내역</div>
+                                    <a href="javascript:goSupportList();"><div class="active mySupport"> 내 후원 내역</div></a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
 
                         <div class="payTableWrap">
-                            <th:block th:if="${payDTO != null}">
-                            <div class="paymentWrap">
-                                <div th:text="'총 결제 금액 :' + ${payDTO.chargeTotal} + '원'">총 결제 금액</div>
-                                <div>
-                                    <form>
-                                        <div id="dateType" >
-                                            <input type="date" id="dateFrom" name="startDate">
-                                            ~ <input type="date" id="dateTo" name="endDate">
-                                        </div>
-                                        <div class="searchWrap">
-                                            <button class="btn btn-sm" id="btnSearch" name="btnSearch">검색</button>
-                                        </div>
-                                    </form>
+                            <th:block th:if="${payChargeTotal != null}">
+                                <div class="paymentWrap">
+                                    <div th:text="'총 결제 금액 :' + ${payChargeTotal} + '원'"></div>
+                                    <div>
+                                        <form name="dateForm" action="/myLibrary/payList">
+                                            <div id="dateType" >
+                                                <input class="userNumber" type="hidden" name="userNumber" value="">
+                                                <input type="date" id="dateFrom" name="startDate">
+                                                ~ <input type="date" id="dateTo" name="endDate">
+                                            </div>
+                                            <div class="searchWrap">
+                                                <button type="submit" class="btn btn-sm" id="btnSearch">검색</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
                             </th:block>
                             <table class="pointTable">
                                 <tbody>
@@ -87,88 +88,46 @@
                                 <th:block th:each="pay:${payList}">
                                     <tr th:object="${pay}">
                                         <td class="td1" th:text="|*{payCharge}원|"></td>
-                                        <td class="td1" th:text="*{#dates.format(payDate, 'yyyy-MM-dd')}"></td>
+                                        <td class="td1" th:text="*{#dates.format(payDateTime, 'yyyy-MM-dd')}"></td>
                                     </tr>
                                 </th:block>
                                 </tbody>
                             </table>
                         </div>
-
-                        <div class="payTableWrap2">
-                            <div class="paymentWrap">
-                                <div>총 후원 금액 (금액)원</div>
-                                <div>
-                                    <form>
-                                        <div id="dateType" >
-                                            <input type="date" id="dateFrom" name="form">
-                                            ~ <input type="date" id="dateTo" name="to">
-                                        </div>
-                                        <div class="searchWrap">
-                                            <button class="btn btn-sm" id="btnSearch" name="btnSearch">검색</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <table class="pointTable">
-                                <tbody>
-                                <tr>
-                                    <th>후원 금액</th>
-                                    <th>후원한 날짜</th>
-                                </tr>
-                                <tr>
-                                    <td class="td1">20,000 원</td>
-                                    <td class="td1">2022-05-02</td>
-                                </tr>
-                                <tr>
-                                    <td class="td1">50,000 원</td>
-                                    <td class="td1">2022-05-01</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--페이징-->
-                        <div class=" d-flex align-items-center justify-content-center" style="height:80px;">
+                        <!--결제 내역 페이징-->
+                        <div class=" d-flex align-items-center justify-content-center" id="pay-paging" style="height:80px;">
                             <nav aria-label="Page navigation">
-                                <ul th:object="${pageDTO}" class="pagination pagination-basic pagination-primary mg-b-0">
+                                <ul class="pagination pagination-basic pagination-primary mg-b-0">
 
 
-                                    <!--                                        <li class="page-item" style="width:30px;margin-left:3px;">-->
-                                    <!--                                            <a style="width:30px;opacity:0.4;" class="page-link" href="/freestory/all/date/1/all/?main_genre=">-->
-                                    <!--                                                <i class="icon ion-arrow-left-a"></i>-->
-                                    <!--                                            </a>-->
-                                    <!--                                        </li>-->
-
-                                    <!--                                        <li class="page-item" style="width:30px;margin-left:1px;">-->
-                                    <!--                                            <a style="width:30px;opacity:0.4;" class="page-link" href="/freestory/all/date/1/all/?main_genre=">-->
-                                    <!--                                                <i class="icon ion-arrow-left-b"></i>-->
-                                    <!--                                            </a>-->
-                                    <!--                                        </li>-->
-                                    <!--페이징 들어갈 자리-->
-                                    <th:block th:each="num:${#numbers.sequence(pageDTO.getStartPage(), pageDTO.getEndPage())}">
-                                        <li th:if="${pageDTO.criteria.getPageNum() == num}" th:text="${num}" class="page-item active" style="width:30px;margin-left:3px;"></li>
-                                        <li th:unless="${pageDTO.criteria.getPageNum() == num}" class="page-item active" style="width:30px;margin-left:3px;">
-                                            <a style="width:30px" class="page-link" th:href="${num}" th:text="${num}"></a>
+                                    <!--이전 버튼-->
+                                    <th:block th:if="${pageMaker.prev}">
+                                        <li>
+                                            <a class="page-link" href="javascript:void(0)" th:onlick="movePage([[${#request.requestURI}]], [[${pageMaker.paging.makeQueryString(pageMaker.pageStart -1)}]], [[${session.userNumber}]])">&lt;</a>
                                         </li>
                                     </th:block>
-                                    <!--                                        <li class="page-item" style="width:30px;margin-left:3px;">-->
-                                    <!--                                            <a style="width:30px;" class="page-link" href="/freestory/all/date/6/all/?main_genre=">-->
-                                    <!--                                                <i class="icon ion-arrow-right-b"></i>-->
-                                    <!--                                            </a>-->
 
-                                    <!--                                        </li><li class="page-item" style="width:30px;margin-left:3px;">-->
-                                    <!--                                        <a style="width:30px;" class="page-link" href="/freestory/all/date/623/all/?main_genre=">-->
-                                    <!--                                            <i class="icon ion-arrow-right-a"></i>-->
-                                    <!--                                        </a>-->
+                                    <!--페이지 번호-->
+                                    <th:block th:with="pageMaker = ${pageMaker}">
+                                        <th:block th:each="num:*{#numbers.sequence(pageMaker.pageStart, pageMaker.pageEnd)}">
+                                            <li th:classappend="${pageMaker.paging.pageNum == num} ? 'active' : ''" class="page-item" style="width:30px;margin-left:3px;">
+                                                <a href="javascript:void(0)" th:text="${num}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${pageMaker.paging.makeQueryString(num)} ]], [[${session.userNumber}]])" style="width:30px" class="page-link"></a>
+                                            </li>
+                                        </th:block>
+                                    </th:block>
+
+                                    <!--다음 버튼-->
+                                    <th:block th:if="${pageMaker.next}">
+                                        <li>
+                                            <a href="javascript:void(0)" th:onclick="movePage( [[ ${#request.requestURI} ]], [[ ${pageMaker.paging.makeQueryString(pageMaker.pageEnd + 1)} ]], [[${session.userNumber}]])"class="page-link">&gt;</a>
+                                        </li>
+                                    </th:block>
 
                                     </li>
-                                    <form action="/myLibrary/payList" th:object="${criteria}" name="pageForm">
-                                        <input type="hidden" name="userNumber" value="1">
-                                        <input type="hidden" th:field="*{pageNum}">
-                                        <input type="hidden" th:field="*{amount}">
-                                    </form>
                                 </ul>
                             </nav>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -176,16 +135,64 @@
     </div>
 </div>
 
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 </body>
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/assets/js/mypage/payment.js"></script>
 <script src="/assets/js/fix/header.js"></script>
-<script>
-    const userNumber = 1; //세션 userNumber 임시 값
-    //결제 버튼 눌렀을 때 이동
-    $(".payment").prop('href', '/myLibrary/payList?userNumber=' + userNumber);
+<script src="/assets/js/mypage/payment.js"></script>
+<script th:inline="javascript">
+    const userNumber = [[${session.userNumber}]]; //세션 userNumber
 
+    //세션이 만료되었을때 로그인 페이지로 이동
+    if(userNumber == null){
+        alert("세션이 만료되어 로그인 페이지로 이동합니다");
+        location.href = '/user/login';
+    }
+
+    function goEditProfile(){
+        location.href = "/myPage/myPageEditProfile";
+    }
+    function goMyWork(){
+        location.href = "/myPage/myPageMyWork";
+    }
+    function goChangePw(){
+        location.href = "/myPage/myPageChangePw";
+    }
+    function goQuestion(){
+        location.href = "/myPage/myPageQuestion";
+    }
+    function goQuit(){
+        location.href = "/myPage/myPageQuit";
+    }
+    function goPayList(){
+        location.href = "/myLibrary/payList";
+    }
+
+    function goSupportList(){
+        location.href = "/myLibrary/supportList";
+    }
+
+    function input(){
+        console.log($('#dateFrom').val().toString());
+        console.log($('#dateTo').val().toString());
+    }
+
+    //페이지 이동
+    /* ![CDATA[ */
+    function movePage(uri, queryString, session) {
+        console.log(uri);
+        console.log(queryString);
+        console.log(session);
+
+        location.href = uri + queryString + "&userNumber=" + session;
+    }
+    /* ]]*/
+
+    //날짜 검색
+    $("#btnSearch").click(function(e){
+        $(dateForm).find("input[name='userNumber']").val(userNumber);
+        $(dataForm).submit();
+    })
 </script>
 </html>

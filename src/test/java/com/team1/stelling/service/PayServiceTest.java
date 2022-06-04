@@ -12,8 +12,8 @@ public class PayServiceTest {
     @Autowired
     PayService payService;
 
-    @Test
+/*    @Test
     public void testGetList(){
         payService.getList(new Criteria(3,10), 1L).forEach(pay -> log.info(pay.toString()));
-    }
+    }*/
 }
