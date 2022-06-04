@@ -4,8 +4,8 @@
 
     <!--등록-->
     <insert id="insert">
-        INSERT INTO TBL_PAY (USER_NUMBER, PAY_CHARGE, PAY_COINCOUNT)
-        VALUES(#{userNumber}, #{payCharge}, #{payCoinCount})
+        INSERT INTO TBL_PAY (PAY_NUMBER, USER_NUMBER, PAY_CHARGE, PAY_COINCOUNT)
+        VALUES(PAY_SEQ.NEXTVAL, #{userNumber}, #{payCharge}, #{payCoinCount})
     </insert>
 
     <!--1개 조회-->
@@ -16,16 +16,18 @@
 
     <!--전체 조회-->
     <select id="getList" resultType="PayVO">
-            SELECT PAY_NUMBER, USER_NUMBER, PAY_CHARGE, PAY_COINCOUNT, PAY_DATETIME, PAY_STATUS
-            FROM TBL_PAY
-            WHERE USER_NUMBER = #{userNumber}
-            <if test="paging.startDate != null and paging.endDate != null">
-                <trim prefix="AND">
-                    PAY_DATETIME BETWEEN #{paging.startDate} AND #{paging.endDate}
-                </trim>
-            </if>
-            ORDER BY PAY_NUMBER DESC
-            LIMIT #{paging.skip}, #{paging.amount}
+        <![CDATA[
+            SELECT PAY_NUMBER, USER_NUMBER, PAY_CHARGE, PAY_COINCOUNT, PAY_DATE, PAY_STATUS
+            FROM
+                (
+                SELECT /*+ INDEX_DESC(TBL_PAY BIN$OBDZeKBJR7yPR8+xtHguqw==$0)*/
+                ROWNUM RN, PAY_NUMBER, USER_NUMBER, PAY_CHARGE, PAY_COINCOUNT, PAY_DATE, PAY_STATUS
+                FROM TBL_PAY
+                WHERE USER_NUMBER = #{userNumber}
+                AND ROWNUM <= #{criteria.pageNum} * #{criteria.amount}
+                )
+            WHERE RN > (#{criteria.pageNum} - 1) * #{criteria.amount}
+        ]]>
     </select>
 
     <!--총 결제 금액-->
@@ -34,12 +36,6 @@
         FROM TBL_PAY
         WHERE USER_NUMBER = #{userNumber}
         GROUP BY USER_NUMBER
-    </select>
-
-    <select id="getPayCharge" resultType="PayVO">
-            SELECT PAY_CHARGE
-            FROM TBL_PAY
-            WHERE USER_NUMBER = #{userNumber}
     </select>
 
     <!--검색한 결과의 총 개수(페이징 처리를 위함)-->
