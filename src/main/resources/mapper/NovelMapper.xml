@@ -7,7 +7,7 @@
         SELECT
         NOVEL_NUMBER ,
         n.USER_NUMBER,
-        U.USER_NICKNAME,
+        u.USER_NICKNAME,
         NOVEL_TITLE ,
         NOVEL_HASHTAG ,
         NOVEL_UPLOADDATE ,
@@ -87,7 +87,7 @@
         SELECT
         NOVEL_NUMBER ,
         n.USER_NUMBER,
-        U.USER_NICKNAME,
+        u.USER_NICKNAME,
         NOVEL_TITLE ,
         NOVEL_HASHTAG ,
         NOVEL_UPLOADDATE ,

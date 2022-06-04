@@ -24,4 +24,6 @@ public class RecentViewService {
     public Page<RecentViewVO> getMyView(Long userNum, Pageable pageable){return recentViewRepository.findByUserVO_UserNumber(userNum,pageable);}
     public Page<RecentViewVO> getMyViewSearch(Long userNum, String keyword, Pageable pageable){ return recentViewRepository.findByUserVO_UserNumberAndNovelVO_NovelHashtagContaining(userNum,keyword,pageable);}
     public boolean remove(Long recentViewNumber){ return recentViewRepository.deleteByRecentViewNumber(recentViewNumber) == 1;}
+    public boolean findRecentView(Long novelNumber){ return recentViewRepository.findByNovelNumber(novelNumber) == 1;}
+    public void registerByUserNumber (Long userNumber){recentViewRepository.registerByUserNumber(userNumber);}
 }

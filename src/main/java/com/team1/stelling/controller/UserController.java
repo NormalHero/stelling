@@ -70,6 +70,17 @@ public class UserController {
         return "user/userLogin";
     }
 
+    @GetMapping("logOut")
+    public String logOut(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(session != null){
+            session.removeAttribute("userNumber");
+            session.removeAttribute("user");
+        }
+        return "redirect:/main/index";
+    }
+
+
     @PostMapping("loginCheck")
     public String login(HttpServletRequest request, String userId, String userPw) {
         UserVO userVO = userService.getByUserId(userId);

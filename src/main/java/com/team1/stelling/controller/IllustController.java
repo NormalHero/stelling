@@ -40,7 +40,7 @@ public class IllustController {
     private final UserService userService;
 
 //  일러스트 리스트 페이지 ----------------------------
-    @GetMapping("/illustList")
+    @GetMapping("illustList")
     public void illustList(Long illustNumber, Model model, @PageableDefault(page = 0, size = 10, sort = "illustNumber" ,direction = Sort.Direction.DESC)Pageable pageable){
 
         List<IllustProfileDTO> profile = illustProfileService.list();
@@ -53,7 +53,7 @@ public class IllustController {
         model.addAttribute("pageableDTO", pageableDTO);
     }
 
-    @GetMapping("/illustList/viewCount")
+    @GetMapping("illustList/viewCount")
     public String illustListViewCount(Long illustNumber, Model model, @PageableDefault(page = 0, size = 10, sort = "illustViewCount" ,direction = Sort.Direction.DESC)Pageable pageable){
 
         List<IllustProfileDTO> profile = illustProfileService.list();
@@ -68,7 +68,7 @@ public class IllustController {
         return "illust/illustListViewCount";
     }
 
-    @GetMapping("/illustList/like")
+    @GetMapping("illustList/like")
     public String illustListLike(Long illustNumber, Model model, @PageableDefault(page = 0, size = 10, sort = "illustLike" ,direction = Sort.Direction.DESC)Pageable pageable){
 
         List<IllustProfileDTO> profile = illustProfileService.list();
@@ -86,12 +86,12 @@ public class IllustController {
     // ---------------------------------
 
 //  채팅 페이지
-    @GetMapping("/illustChatPage")
+    @GetMapping("illustChatPage")
     public void chatForm(){
     }
 
 //  일러스트 카테고리
-    @GetMapping("/illustCategoryList")
+    @GetMapping("illustCategoryList")
     public String illustCategoryList(Long illustNumber, String keyword, Model model, @PageableDefault(page = 0, size = 10, sort = "illustNumber" ,direction = Sort.Direction.DESC)Pageable pageable){
         Page<IllustVO> list = illustService.CategoryList(keyword, pageable);
         PageableDTO pageableDTO = new PageableDTO( (int)list.getTotalElements(),pageable);
@@ -105,9 +105,9 @@ public class IllustController {
     }
 
 //  작품 등록---------------------------
-    @GetMapping("/illustPostingPage") public void illustList(){}
+    @GetMapping("illustPostingPage") public void illustList(){}
 
-    @PostMapping("/illustPostingPage")
+    @PostMapping("illustPostingPage")
     public RedirectView illustRegister(IllustVO illustVO,HttpServletRequest request){
 
         HttpSession session = request.getSession();
@@ -122,7 +122,7 @@ public class IllustController {
 //    이미지 파일 관련----------------------------------
 
     /*이미지 저장*/
-    @PostMapping("/uploadAjaxAction")
+    @PostMapping("uploadAjaxAction")
     @ResponseBody
     public List<IllustVO> uploadAjaxPost(MultipartFile[] uploadFile) {
         String uploadFolder = "/home/ubuntu/stelling/upload/";
@@ -162,7 +162,7 @@ public class IllustController {
     }
 
     //저장된 이미지 가져오기
-    @GetMapping("/illustImg")
+    @GetMapping("illustImg")
     @ResponseBody
     public byte[] getFile(String fileName) throws IOException{
         return FileCopyUtils.copyToByteArray(new File("/home/ubuntu/stelling/upload/" + fileName));
@@ -171,7 +171,7 @@ public class IllustController {
 //    ------------------------------------
 
 //  프로필 등록 --------
-    @GetMapping("/illustUserInput")
+    @GetMapping("illustUserInput")
     public void illustUserInput(Long userNumber, Model model, HttpServletRequest request){
 
         HttpSession session = request.getSession();
@@ -181,9 +181,9 @@ public class IllustController {
 
     }
 
-    @GetMapping("/register") public void register(){}
+    @GetMapping("register") public void register(){}
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public RedirectView register(IllustProfileVO illustProfileVO, HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession();
@@ -200,7 +200,7 @@ public class IllustController {
 //    --------
 
 //  유저 프로필 페이지
-    @GetMapping("/illustUserPage")
+    @GetMapping("illustUserPage")
     public String illustUserPage(Long userNumber , Long illustNumber,  Model model, @PageableDefault(page = 0, size = 10, sort = "illustNumber" ,direction = Sort.Direction.DESC) Pageable pageable){
 
 
@@ -219,7 +219,7 @@ public class IllustController {
 
 //  작품 상세보기
     @LogStatus
-    @GetMapping("/illustViewDetail")
+    @GetMapping("illustViewDetail")
     public String read(Long illustNumber, Long userNumber, Model model, @PageableDefault(page = 0, size = 10, sort = "illustNumber" ,direction = Sort.Direction.DESC) Pageable pageable){
 
         List<IllustVO> list = illustService.getSixList(userNumber);
@@ -236,7 +236,7 @@ public class IllustController {
 
 //  좋아요(하트)
     @ResponseBody
-    @GetMapping("/{illustNumber}/{num}")
+    @GetMapping("{illustNumber}/{num}")
     public int illustLike(@PathVariable("illustNumber")Long illustNumber, @PathVariable("num")int num){
         IllustVO illustVO = illustService.get(illustNumber);
         illustVO.updateIllustLike(num);
@@ -246,7 +246,7 @@ public class IllustController {
 
 
 //  프로필 유무 검사1 -> 작품 등록
-    @GetMapping("/illust/illustProfileCheck1")
+    @GetMapping("illust/illustProfileCheck1")
     public String illustProfileCheck1(IllustVO illustVO,HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession();
@@ -267,12 +267,15 @@ public class IllustController {
     }
 
 //  프로필 유무 검사2 -> 본인 프로필 페이지
-    @GetMapping("/illust/illustProfileCheck2")
+    @GetMapping("illust/illustProfileCheck2")
     public String illustProfileCheck2(Long userNumber, Long illustNumber,  Model model, @PageableDefault(page = 0, size = 10, sort = "illustNumber" ,direction = Sort.Direction.DESC) Pageable pageable, HttpServletRequest request){
 
 
         HttpSession session = request.getSession();
-        session.getAttribute("userNumber");
+        if(Objects.isNull(session.getAttribute("userNumber"))){
+            return "redirect:/user/login";
+        };
+
 
         if(illustProfileService.checkProfile((Long) session.getAttribute("userNumber")) != null){
 

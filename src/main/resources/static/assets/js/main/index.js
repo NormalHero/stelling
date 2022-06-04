@@ -88,7 +88,7 @@ function auto (){
 }
 
 //hot 옆에 시간 
-RealTime()
+// RealTime()
 function RealTime (){
 let today = new Date()
 let hour = today.getHours()

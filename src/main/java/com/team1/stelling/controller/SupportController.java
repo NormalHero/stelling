@@ -20,7 +20,7 @@ import java.util.List;
 public class SupportController {
     private final SupportService supportService;
 
-    @GetMapping("/getSupportListWithNovelNumber")
+    @GetMapping("getSupportListWithNovelNumber")
     public List<SupportVO> getSupportListWithNovelNumber(Long novelNumber){
         List<SupportVO> supportVOList=supportService.getSupportListWithNovelNumber(novelNumber);
 

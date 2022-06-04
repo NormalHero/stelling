@@ -30,7 +30,7 @@ public class BuyChapterController {
     private final UserService userService;
 
 
-    @GetMapping("/checkBalanceAndBuy")
+    @GetMapping("checkBalanceAndBuy")
     @ResponseBody
     public HashMap<String, Object> checkBalanceAndBuy(Long novelNumber, Long subNovelNumber,Long userNumber,HttpServletRequest request){
         HashMap<String, Object> status=new HashMap<>();

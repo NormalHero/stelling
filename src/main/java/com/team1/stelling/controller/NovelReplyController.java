@@ -48,19 +48,19 @@ public class NovelReplyController {
 
     //reply+user 가져오기
     @Transactional
-    @GetMapping("/list/{subNovelNumber}")
+    @GetMapping("list/{subNovelNumber}")
     public ReplyListDTO replygetList(@PathVariable("subNovelNumber") Long subNovelNumber){
         return new ReplyListDTO(replyService.getList(subNovelNumber),replyService.getUserList(subNovelNumber));
     }
 
     //소설 회차 번호로 댓글 가져오기
-    @GetMapping("/repliesTest/{subNovelNumber}")
+    @GetMapping("repliesTest/{subNovelNumber}")
     public List<ReplyVO> getList(@PathVariable Long subNovelNumber){
         return replyService.getList(subNovelNumber);
     }
 
     //댓글 좋아요 기능
-    @GetMapping("/{replyNum}/{num}")
+    @GetMapping("{replyNum}/{num}")
     public void replyUp(@PathVariable("replyNum") Long replyNum, @PathVariable("num")int num){
         ReplyVO replyVO = replyService.get(replyNum);
         replyVO.updateReplyUp(num);
@@ -69,7 +69,7 @@ public class NovelReplyController {
 
 
     //댓글 최신순
-    @GetMapping("/getReplyUserDTO")
+    @GetMapping("getReplyUserDTO")
     public ReplyUserDTO getreplys(Long novelNumber, @PageableDefault(page =0 ,size =5 ,sort ="replyUploadDate" ,direction = Sort.Direction.DESC) Pageable pageable){
         Page<ReplyVO> replyVOS = replyService.getReplyListByNovelNumber(novelNumber,pageable);
         Page<UserVO> userVOS = replyVOS.map(v->v.getUserVO());
@@ -78,7 +78,7 @@ public class NovelReplyController {
     }
 
     //댓글 추천순
-    @GetMapping("/getReplyUpUserDTO")
+    @GetMapping("getReplyUpUserDTO")
     public ReplyUserDTO getreplyUps(Long novelNumber, @PageableDefault(page =0 ,size =5 ,sort ="replyUp" ,direction = Sort.Direction.DESC) Pageable pageable){
         Page<ReplyVO> replyVOS = replyService.getReplyListByNovelNumber(novelNumber,pageable);
         Page<UserVO> userVOS = replyVOS.map(v->v.getUserVO());
@@ -87,7 +87,7 @@ public class NovelReplyController {
     }
 
     //소설번호로 가져온 댓글 최신순
-    @GetMapping("/getReplyUserDTOBySubNum")
+    @GetMapping("getReplyUserDTOBySubNum")
     public ReplyUserDTO getReplyUserDTOBySubNum(Long subNovelNumber, @PageableDefault(page=0, size = 5, sort ="replyUploadDate", direction = Sort.Direction.DESC) Pageable pageable){
         Page<ReplyVO> replyVOS = replyService.getReplyListBySubNovelNumber(subNovelNumber, pageable);
         Page<UserVO> userVOS = replyVOS.map(v->v.getUserVO());
@@ -96,7 +96,7 @@ public class NovelReplyController {
     }
 
     //소설번호로 가져온 댓글 최신순
-    @GetMapping("/getReplyUpUserDTOBySubNum")
+    @GetMapping("getReplyUpUserDTOBySubNum")
     public ReplyUserDTO getReplyUpUserDTOBySubNum(Long subNovelNumber, @PageableDefault(page=0, size = 5, sort ="replyUp", direction = Sort.Direction.DESC) Pageable pageable){
         Page<ReplyVO> replyVOS = replyService.getReplyListBySubNovelNumber(subNovelNumber, pageable);
         Page<UserVO> userVOS = replyVOS.map(v->v.getUserVO());
@@ -104,7 +104,7 @@ public class NovelReplyController {
         return replyUserDTO;
     }
 
-    @GetMapping("/deleteReply")
+    @GetMapping("deleteReply")
     public void deleteReply(Long replyNumber){
         replyService.removeReply(replyNumber);
     }

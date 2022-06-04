@@ -226,7 +226,7 @@ $("input[type='file']").change(function(e){
 
         /*해쉬태그*/
         let hashtag = $('#tag-list').text();
-        hashtag = hashtag.replace(/x/gi, "");
+        hashtag = hashtag.replace(/x/gi, " ");
         hashtag = hashtag.replace(/&nbsp/gi, ",");
         $('input[name="novelHashtag"]').val(hashtag);
         $('input[name="novelCategory"]').val($(label).val());

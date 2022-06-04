@@ -12,7 +12,7 @@
 <body>
 <!-- 헤더 시작 -->
 
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 
 <!--헤더 이미지-->
 <div id="headerImgWrap" >
@@ -67,7 +67,9 @@
                                 <input name="userNewPw" class="rePw" type="password" onchange="sameNewPw(this)" placeholder="새 비밀번호를 다시 입력해주세요">
                                 <p class ="p" id="result_reNewPw"></p>
                             </div>
+            </form>
                         </div>
+
                     </div>
                     <div class="wrap_btn">
                         <button type="submit" class="wrap_btn_save" name="저장_버튼" onclick="test()">저장</button>
@@ -78,7 +80,7 @@
     </div>
 </div>
 </div>
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 <!-- Scripts -->
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

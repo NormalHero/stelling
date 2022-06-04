@@ -12,7 +12,7 @@
 <body style="max-witdh:1200px ;">
 
 <!-- 헤더 시작 -->
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 <!--헤더 이미지-->
 <div id="headerImgWrap" >
     <img id="headerImg"src="/images/fix/headerImg_3.png" >
@@ -40,10 +40,11 @@
         </div>
     </div>
 </div>
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
-<script src="/assets/js/fix/header.js"></script>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/assets/js/fix/header.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
     $('#findPwBtn').click(function(){

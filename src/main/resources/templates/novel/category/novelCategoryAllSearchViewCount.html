@@ -12,7 +12,7 @@
 <body>
 
 <!-- 헤더 시작 -->
-    <th:block th:insert="/fix/headerWord.html :: headFragment"/>
+    <th:block th:insert="fix/headerWord.html :: headFragment"/>
 
     <!--헤더 이미지-->
     <div id="headerImgWrap" >
@@ -48,7 +48,7 @@
                         <div class="OptionChange" th:onclick="'location.href=\''+ @{/novel/category/novelSearch/viewCount(keyword=${pageableDTO.keyword},categoryStatus=${pageableDTO.categoryStatus})} +'\'' "><img src="/images/category/checkIcon.png" alt="체크아이콘">조회순</div>
                         <div class="OptionChange" th:onclick="'location.href=\''+ @{/novel/category/novelSearch/likeCount(keyword=${pageableDTO.keyword},categoryStatus=${pageableDTO.categoryStatus})} +'\'' "><img src="/images/category/optionPointIcon.png" alt="체크아이콘">추천순</div>
                     </div>
-                        <a href="/novel/category/novelWrite" class="writeButton"><img src="/images/category/wordWriteIcon.png" alt="글등록아이콘">신규작품 등록</a>
+                        <a href="/novel/novelRegister" class="writeButton"><img src="/images/category/wordWriteIcon.png" alt="글등록아이콘">신규작품 등록</a>
                 </div>
             </div>
             <div id="tagSearchWrap" class="giveMaxWidth">
@@ -98,7 +98,7 @@
                                     <span class="mono_content">독점</span>
                                     <span class="finish_content" th:if="${novel.novelStatus == 2}">완결</span>
                                 </div>
-                                <a th:href="@{/novel/novelDetailView(novelNumber=${novel.novelNumber})}" class="info_title" th:text="${novel.novelTitle}"></a>
+                                <a th:href="@{/novel/novelRoundList(novelNumber=${novel.novelNumber})}" class="info_title" th:text="${novel.novelTitle}"></a>
                                 <a  class="info_writer" th:text="${novel.userVO.userNickName}"></a>
                             </div>
                             <div class="info_summary" th:text="${novel.novelIntro}"></div>
@@ -165,7 +165,7 @@
         </section>
     </div>
 
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 </body>
 <script></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

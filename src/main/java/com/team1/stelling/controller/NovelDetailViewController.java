@@ -33,7 +33,7 @@ public class NovelDetailViewController {
 
 
     /*소설 회차 좋아요*/
-    @GetMapping("/{subNovelNumber}/{num}")
+    @GetMapping("{subNovelNumber}/{num}")
     public int subNovelLikeCounting(@PathVariable("subNovelNumber")Long subNovelNumber, @PathVariable("num") int num){
        SubNovelVO subNovelVO = subNovelService.get(subNovelNumber);
        subNovelVO.updateSubNovelLickCount(num);
@@ -42,7 +42,7 @@ public class NovelDetailViewController {
     }
 
     /*댓글 신고*/
-    @GetMapping("/siren")
+    @GetMapping("siren")
     public String report(Long replyNumber){
         ReplyVO replyVO= replyService.get(replyNumber);
         replyVO.updatereplyReport();
@@ -51,7 +51,7 @@ public class NovelDetailViewController {
     }
 
     /*후원하기*/
-    @GetMapping("/supporting")
+    @GetMapping("supporting")
     public HashMap<String, Object> supporting(Long novelNumber, Long SubNovelNumber, Long userNumber,int coin, HttpServletRequest request){
         HashMap<String, Object> status = new HashMap<>();
         UserVO userVO = userService.get(userNumber);

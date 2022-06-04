@@ -11,7 +11,7 @@
 
 <body>
 <!-- 헤더 시작 -->
-<th:block th:insert="/fix/headerWordIllust.html :: headIllustFragment"/>
+<th:block th:insert="fix/headerWordIllust.html :: headIllustFragment"/>
 <div id="headerImgWrap" >
     <img id="headerImg" src="/images/배너2.png">
 </div>
@@ -31,13 +31,14 @@
     <div>
         <th:block th:if="${user.userFilePath} == 'stelling'">
         <div class="profilePicture">
-            <img th:src="'/upload/display?fileName='+${user.userFilePath}+'/'+${user.userFileName}" height="100%" width="100%"/>
+            <img th:src="'/upload/display?fileName='+${user.userFilePath}+'/'+${user.userUuid}+'_'+${user.userFileName}" height="100%" width="100%"/>
+
             <p class="changeImageText">※ 이미지 변경은 마이페이지에서 가능합니다.</p>
         </div>
         </th:block>
         <th:block th:unless="${user.userFilePath} == 'stelling'">
             <div class="profilePicture">
-                <img th:src="'/illust/illustImg?fileName='+*{userFilePath}+'/'+*{userFileName}" height="100%" width="100%"/>
+                <img th:src="'/upload/display?fileName='+${user.userFilePath}+'/'+${user.userUuid}+'_'+${user.userFileName}"   height="100%" width="100%"/>
                 <p class="changeImageText">※ 이미지 변경은 마이페이지에서 가능합니다.</p>
             </div>
         </th:block>
@@ -141,7 +142,7 @@
 
 </div>
 
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/assets/js/fix/header.js"></script>

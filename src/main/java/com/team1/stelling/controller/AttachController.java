@@ -33,87 +33,16 @@ import java.util.UUID;
 @RequestMapping("/upload/*")
 public class AttachController {
 
-/*
-    @PostMapping("/uploadAjaxAction")
-    @ResponseBody
-    public List<AttachVO> uploadAjaxPost(MultipartFile[] uploadFile){
-        String uploadFolder = "C:/upload";
-        List<AttachVO> fileList = new ArrayList<>();
-//        UUID(Universally unique identifier) : 범용 고유 식별자
-//        네트워크 상에서 각각의 개체들을 식별하기 위하여 사용되었다.
-//        중복될 가능성이 거의 없다고 인정되기 때문에 많이 사용된다.
-//        UUID의 개수는 10의 38승입니다.
-
-        UUID uuid = UUID.randomUUID();
-        String uploadFileName = null;
-
-        String uploadFolderPath = getPath();
-        File uploadPath = new File(uploadFolder, uploadFolderPath);
-        if(!uploadPath.exists()){
-            uploadPath.mkdirs();
-        }
-        for(MultipartFile file : uploadFile){
-            log.info("-------------------------");
-            log.info("Upload File Name : " + file.getOriginalFilename());
-            log.info("Upload File Size : " + file.getSize());
-
-            AttachVO AttachVO = new AttachVO();
-            uploadFileName = uuid.toString() + "_" + file.getOriginalFilename();
-
-            AttachVO.setFileName(uploadFileName);
-            AttachVO.setUuid(uuid.toString());
-            AttachVO.setUploadPath(uploadFolderPath);
-
-            //저장할 경로와 파일의 이름을 File객체에 담는다.
-            File saveFile = new File(uploadPath, uploadFileName);
-
-            try {
-                //설정한 경로에 해당 파일을 업로드한다.
-                file.transferTo(saveFile);
-//                InputStream in = new FileInputStream(saveFile);
-
-                if(checkImageType(saveFile)){
-                    AttachVO.setImage(true);
-                    FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-//                    Thumbnailator.createThumbnail(in, thumbnail, 100, 100);
-                    Thumbnailator.createThumbnail(file.getInputStream(), thumbnail, 100, 100);
-                    thumbnail.close();
-                }
-                fileList.add(AttachVO);
-            } catch (IOException e) {
-                log.error(e.getMessage());
-            }
-        }
-        return fileList;
-    }
-*/
-
-    //    @GetMapping("/display")
-//    @ResponseBody
-//    public ResponseEntity<byte[]> getFile(String fileName){
-//        File file = new File("C:/upload/" + fileName);
-//        HttpHeaders header = new HttpHeaders();
-//        ResponseEntity<byte[]> result = null;
-//        try {
-////            헤더에 적절한 파일의 타입을 probeContentType을 통해서 포함시킨다.
-////            png파일이면 image/png, jpeg파일이면 image/jpeg 타입으로 포함시킨다.
-//            header.add("Content-Type", Files.probeContentType(file.toPath()));
-//            result = new ResponseEntity<byte[]>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return result;
-//    }
-    @GetMapping("/display")
+    @GetMapping("display")
     @ResponseBody
     public byte[] getFile(String fileName) throws IOException{
-        return FileCopyUtils.copyToByteArray(new File("C:/stelling/" + fileName));
+        return FileCopyUtils.copyToByteArray(new File("/home/ubuntu/stelling/upload/" + fileName));
     }
 
-    @GetMapping("/download")
+    @GetMapping("download")
     @ResponseBody
     public ResponseEntity<Resource> download(String fileName){
-        Resource resource = new FileSystemResource("C:/stelling/" + fileName);
+        Resource resource = new FileSystemResource("/home/ubuntu/stelling/upload/" + fileName);
         HttpHeaders header = new HttpHeaders();
         String name = resource.getFilename();
         name = name.substring(name.indexOf("_") + 1);
@@ -127,10 +56,10 @@ public class AttachController {
         return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
     }
 
-    @PostMapping("/deleteFile")
+    @PostMapping("deleteFile")
     @ResponseBody
     public String deleteFile(String fileName, String type){
-        File file = new File("C:/stelling/" + fileName);
+        File file = new File("/home/ubuntu/stelling/upload/" + fileName);
         file.delete();
         if(type.equals("image")){
             file = new File(file.getPath().replace("s_", ""));

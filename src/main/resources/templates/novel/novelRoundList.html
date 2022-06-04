@@ -13,7 +13,7 @@
 </head>
 <body>
 <!-- 헤더 시작 -->
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 
 <div class="MainHeader">
 
@@ -53,7 +53,7 @@
                             <div class="x_Desc_pepole">
                                 <div>
                                     <img src="https://static-page.kakao.com/static/common/ico-workhome-person.svg?41e74cfb5cb9084198b21f6b2c7899c2" alt="">
-                                    <div class="watchCnt"><h3></h3></div>
+                                    <div class="watchCnt"><h3 th:text="|${novelVO.novelViewCountTotal}명|"></h3></div>
                                 </div>
 
                                 <div>
@@ -98,14 +98,7 @@
 
                                 <div class="x_xBtn">
                                     <button onclick="IntroModalHandler()">작품소개</button>
-                                    <th:block th:if="${session.userNumber==novelVO.userVO.userNumber}">
-                                        <a th:href="@{/novel/novelWrite(novelNumber=${novelNumber})}">
-                                    <button type="button" class="writeNovel" >소설등록</button>
-                                        </a>
-                                    </th:block>
-                                    <th:block th:unless="${session.userNumber==novelVO.userVO.userNumber}">
-                                        <a th:href="@{/novel/novelDetailView(novelNumber=${novelNumber}, subNovelNumber=${firstSNumber}, count=1)}"><button type="button" class="goToFirst">첫편보기</button></a>
-                                    </th:block>
+                                    <a th:href="@{/novel/novelDetailView(novelNumber=${novelNumber}, subNovelNumber=${firstSNumber}, count=1)}"><button type="button" class="goToFirst">첫편보기</button></a>
                                 </div>
                             </div>
                         </div>
@@ -114,18 +107,18 @@
 
                     <div class="x_xF">
                         <button>
-                                <MARQUEE scrollamount="3">
-                                    <th:block th:each="supportUserDTO, i:${supportUserDTOS}" >
+                            <MARQUEE scrollamount="3">
+                                <th:block th:each="supportUserDTO, i:${supportUserDTOS}" >
                                         <span style="color: #ef6e73;">
                                             ❤
                                             <span style="color:gray" th:text="|${i.count}위. ${supportUserDTO.userNickName}님 ${supportUserDTO.coin}코인|"></span>
                                         </span>
 
-                                    </th:block>
-                                </MARQUEE>
+                                </th:block>
+                            </MARQUEE>
 
 
-                           <div onclick="ModalHandler()" class="modaldiv"><img src="https://static-page.kakao.com/static/common/ic-same-novel.svg?b923ffbeb7a7a8a2e2e3091b1ff9e4f6" alt=""></div>
+                            <div onclick="ModalHandler()" class="modaldiv"><img src="https://static-page.kakao.com/static/common/ic-same-novel.svg?b923ffbeb7a7a8a2e2e3091b1ff9e4f6" alt=""></div>
                         </button>
                     </div>
                     <div class="hashtag">
@@ -176,15 +169,15 @@
                                                 </div>
                                             </th:block>
                                             <th:block th:unless="${(pageableDTO.pageNumber==1) && (i.count<6)}">
-                                                <div style="display: flex;" class="locked locked2" onclick="checkUserNum()" th:name="${subnovelVO.subNovelNumber}">
+                                                <div style="display: flex;" class="locked locked2" th:name="${subnovelVO.subNovelNumber}">
                                                     <th:block th:if="${subNumList!=null}">
-                                                            <th:block th:if="${#strings.contains(subNumList,subnovelVO.subNovelNumber)==true}">
-                                                                <div class="Noveltt" th:text="|${subnovelVO.novelVO.novelTitle} ${i.count+(pageableDTO.pageNumber-1)*10}화|"></div>
-                                                            </th:block>
-                                                            <th:block th:unless="${#strings.contains(subNumList,subnovelVO.subNovelNumber)==true}">
-                                                                <div class="Noveltt locked lockRow" th:text="|${subnovelVO.novelVO.novelTitle} ${i.count+(pageableDTO.pageNumber-1)*10}화|" ></div>
-                                                                <img src="/images/icon/잠금.png" class="lock lockRow" th:data-lock="${subnovelVO.subNovelNumber}"/>
-                                                            </th:block>
+                                                        <th:block th:if="${#strings.contains(subNumList,subnovelVO.subNovelNumber)==true}">
+                                                            <div class="Noveltt" th:text="|${subnovelVO.novelVO.novelTitle} ${i.count+(pageableDTO.pageNumber-1)*10}화|"></div>
+                                                        </th:block>
+                                                        <th:block th:unless="${#strings.contains(subNumList,subnovelVO.subNovelNumber)==true}">
+                                                            <div class="Noveltt locked lockRow" th:text="|${subnovelVO.novelVO.novelTitle} ${i.count+(pageableDTO.pageNumber-1)*10}화|" ></div>
+                                                            <img src="/images/icon/잠금.png" class="lock lockRow" th:data-lock="${subnovelVO.subNovelNumber}"/>
+                                                        </th:block>
                                                     </th:block>
                                                     <th:block th:unless="${subNumList!=null}">
                                                         <div class="Noveltt locked lockRow" th:text="|${subnovelVO.novelVO.novelTitle} ${i.count+(pageableDTO.pageNumber-1)*10}화|"></div>
@@ -271,11 +264,11 @@
                     <th style="width: 33%">후원 개수</th>
                 </tr>
                 <th:block th:each="supportUserDTO, i:${supportUserDTOS} ">
-                   <tr>
-                       <td class="rank" th:text="|${i.count}위|"></td>
-                       <td class="rank-id" style="text-align: left;" th:text="${supportUserDTO.userNickName}"></td>
-                       <td class="rank-number" th:text="|${supportUserDTO.coin}코인|"></td>
-                   </tr>
+                    <tr>
+                        <td class="rank" th:text="|${i.count}위|"></td>
+                        <td class="rank-id" style="text-align: left;" th:text="${supportUserDTO.userNickName}"></td>
+                        <td class="rank-number" th:text="|${supportUserDTO.coin}코인|"></td>
+                    </tr>
                 </th:block>
                 </tbody>
             </table>
@@ -320,7 +313,7 @@
 <!--코인 충전모달-->
 <div class="modal_background3">
     <div class="payQModal2" style="height: 248px;">
-     <div class="x">x</div>
+        <div class="x">x</div>
         <div class="cash">
             <p class="cashMent">앗! 이런, 코인이 부족하네요</p>
             <p class="balance2">현재 잔액:1000코인</p>
@@ -334,7 +327,7 @@
 
 
 
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 
 
 </body>
@@ -343,7 +336,6 @@
 <script th:inline="javascript">
     const novelNumber = [[${novelNumber}]]
     const userNumber =[[${session.userNumber}]]
-    const viewCount=[[${novelVO.novelViewCountTotal}]]
 </script>
 <script src="/assets/js/novel/data.js"></script>
 <script src="/assets/js/fix/header.js"></script>

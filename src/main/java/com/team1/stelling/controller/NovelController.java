@@ -46,20 +46,21 @@ public class NovelController {
     private final UserService userService;
     private final SubNovelService subNovelService;
     private final NovelFileService novelFileService;
- 
+    private final RecentViewService recentViewService;
 
 
-    @GetMapping("/novelRegister")
+
+    @GetMapping("novelRegister")
     public void ViewDetail(){
     }
 
-    @GetMapping("/novelWrite")
+    @GetMapping("novelWrite")
     public void novelWrite(Long novelNumber, Model model){
         model.addAttribute("novelNumber", novelNumber);
     }
 
     /*소설 수정페이지 이동*/
-    @GetMapping("/novelModify")
+    @GetMapping("novelModify")
     public String novelModify(Long subNovelNumber,Long novelNumber,Model model) throws IOException{
         String getFilePath= novelFileService.getFilePathBySubNum(subNovelNumber).getNovelFileFilePath();
         String getFileName= novelFileService.getFilePathBySubNum(subNovelNumber).getNovelFileFileName();
@@ -91,7 +92,7 @@ public class NovelController {
     }
 
     @LogStatus
-    @GetMapping("/novelCategory")
+    @GetMapping("novelCategory")
     public void novelCategory(Model model, @PageableDefault(page = 0, size = 10, sort = "novelNumber" ,direction = Sort.Direction.DESC)Pageable pageable){
         Page<NovelCategoryDTO> list = novelService.getList(pageable);
         PageableDTO pageableDTO = new PageableDTO( (int)list.getTotalElements(),pageable);
@@ -101,13 +102,13 @@ public class NovelController {
     }
 
 
-    @GetMapping("/novelRanking")
+    @GetMapping("novelRanking")
     public void novelRanking(){
     }
 
 
     /*소설상세보기 페이지*/
-    @GetMapping("/novelDetailView")
+    @GetMapping("novelDetailView")
     public void ViewDetail(Long novelNumber,Long subNovelNumber,int count, HttpServletRequest request, Model model) throws IOException {
         String getFilePath= novelFileService.getFilePathBySubNum(subNovelNumber).getNovelFileFilePath();
         String getFileName= novelFileService.getFilePathBySubNum(subNovelNumber).getNovelFileFileName();
@@ -118,12 +119,17 @@ public class NovelController {
         NovelVO novelVo = subNovelVO.getNovelVO();
         List<SubNovelVO> subNovelVOList = subNovelService.getListByNovelNumber(novelNumber);
 
+        HttpSession session = request.getSession();
+        Long userNumber = (Long) session.getAttribute("userNumber");
+        if(!recentViewService.findRecentView(novelNumber)){
+            RecentViewVO recentViewVO = RecentViewVO.builder().userVO(userService.get(userNumber)).novelVO(novelService.get(novelNumber)).build();
+            recentViewService.register(recentViewVO);
+        }
 
         BufferedReader br = null;
         String line = null;
         String result = "";
-        HttpSession session = request.getSession();
-        Long userNumber =(Long)session.getAttribute("userNumber");
+
 
         try {
             br = new BufferedReader(new FileReader("/home/ubuntu/stelling/upload/"+getFilePath+"/"+getFileName+".txt"));
@@ -153,7 +159,7 @@ public class NovelController {
 
     }
 
-    @GetMapping("/nextPrevNovelDetailView")
+    @GetMapping("nextPrevNovelDetailView")
     public RedirectView nextPrevNovelDetailView(Long novelNumber, Long subNovelNumber, int num, int count,RedirectAttributes rttr){
         List<SubNovelVO> subNovelVOList=subNovelService.getListByNovelNumber(novelNumber);
         int currentIndexNum = subNovelVOList.indexOf(subNovelService.get(subNovelNumber));
@@ -167,7 +173,7 @@ public class NovelController {
 
 
     @LogStatus
-    @GetMapping("/novelSearch")
+    @GetMapping("novelSearch")
     public String novelSearch (String keyword, Model model, @PageableDefault(page = 0, size = 10, sort = "novelNumber" ,direction = Sort.Direction.DESC)Pageable pageable){
         Page<NovelCategoryDTO> searchList = novelService.search(keyword, pageable);
         PageableDTO pageableDTO = new PageableDTO( (int)searchList.getTotalElements(),pageable);
@@ -180,22 +186,25 @@ public class NovelController {
     }
 
     /*소설 등록*/
-    @PostMapping("/novelRegister")
+    @PostMapping("novelRegister")
     public RedirectView novelRegister(NovelVO novelVO, HttpServletRequest request, RedirectAttributes rttr) {
 
         HttpSession session = request.getSession();
         Long userNumber = (Long)session.getAttribute("userNumber");
         novelVO.setUserVO(userService.get(userNumber));
+
+            String[] result = novelVO.getNovelHashtag().split(" ");
+            novelVO.setNovelCategory(result[0]);
         Long novelNumber = novelService.registerReturnNovelNum(novelVO);
         rttr.addAttribute("novelNumber",novelNumber);
         return new RedirectView("novelRoundList");
     }
 
     /*소설 표지 이미지 저장*/
-    @PostMapping("/uploadAjaxAction")
+    @PostMapping("uploadAjaxAction")
     @ResponseBody
     public List<NovelVO> uploadAjaxPost(MultipartFile[] uploadFile) {
-        String uploadFolder = "C:/stelling";
+        String uploadFolder = "/home/ubuntu/stelling/upload/";
         List<NovelVO> fileList = new ArrayList<>();
 
         UUID uuid = UUID.randomUUID();
@@ -245,7 +254,7 @@ public class NovelController {
 
 
     /*소설회차 원고파일 생성*/
-    @PostMapping("/makeNovelFile")
+    @PostMapping("makeNovelFile")
     public RedirectView novelBufferedWrite(NovelFileDTO novelFileDTO) throws IOException {
 
         NovelVO novelVO =novelService.get(novelFileDTO.getNovelNumber());
@@ -259,9 +268,10 @@ public class NovelController {
                 .subNovelStatus(1).build();
 
         subNovelService.register(subNovelVO);
-
+        novelVO.setNovelRoundAboutTotal(novelVO.getNovelRoundAboutTotal()+1);
+        novelService.modify(novelVO);
         String title = novelVO.getNovelTitle();
-        String uploadFolder = "C:/stelling";
+        String uploadFolder = "/home/ubuntu/stelling/upload/";
         UUID uuid = UUID.randomUUID();
         String uploadFolderPath = novelVO.getNovelNumber()+"_"+title+"/"+getPath();
         String uploadFileName = uuid.toString() + "_" + novelFileDTO.getSubNovelTitle();
@@ -284,7 +294,7 @@ public class NovelController {
     }
 
     /*수정된 파일 DB저장, 파일 저장*/
-    @PostMapping("/modifyNovelFile")
+    @PostMapping("modifyNovelFile")
     public RedirectView modifyNovelFile(NovelFileDTO novelFileDTO, RedirectAttributes rttr) throws IOException{
         DateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
@@ -297,7 +307,7 @@ public class NovelController {
                 .novelVO(novelService.get(novelFileDTO.getNovelNumber()))
                 .build());
         NovelFileVO novelFileVO = novelFileService.getFilePathBySubNum(novelFileDTO.getSubNovelNumber());
-        String uploadPath="C:/stelling/"+novelFileVO.getNovelFileFilePath();
+        String uploadPath="/home/ubuntu/stelling/upload/"+novelFileVO.getNovelFileFilePath();
         String uploadFileName = novelFileVO.getNovelFileFileName();
 
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File(uploadPath+"/"+uploadFileName+".txt")));

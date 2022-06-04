@@ -12,7 +12,7 @@
 <body>
 <!-- 헤더 시작 -->
 
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 
 <!--헤더 이미지-->
 <div id="headerImgWrap" >
@@ -52,7 +52,7 @@
                             <tbody>
                             <tr>
                                 <td class="active1 one" style="width: 50%">
-                                    <a href="javascript:goPayList();"><div class="active myPoint">내 포인트</div></a>
+                                    <a href="/myLibrary/payList"><div class="active myPoint">내 포인트</div></a>
                                 </td>
                                 <td class="active2" style="width: 50%">
                                     <a href="javascript:goSupportList();" style="border-bottom: 1px solid #ef6e73b3;"><div class="active mySupport"> 내 후원 내역</div></a>
@@ -133,7 +133,7 @@
     </div>
 </div>
 
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 </body>
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -169,7 +169,7 @@
     }
 
     function goSupportList(){
-        location.href = "/myLibrary/supportList";
+        location.href = "/myLibrary/supportList?supportSponser=" + userNumber;
     }
     //페이지 이동
     /* ![CDATA[ */

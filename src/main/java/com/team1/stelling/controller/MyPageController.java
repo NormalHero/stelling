@@ -37,7 +37,7 @@ public class MyPageController {
 
 
     //프로필수정
-    @PostMapping("/myPageEditProfile")
+    @PostMapping("myPageEditProfile")
     public void modify(UserVO userVO, Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Long userNumber = (Long) session.getAttribute("userNumber");
@@ -56,13 +56,13 @@ public class MyPageController {
         model.addAttribute("userVO", userProfile);
     }
 
-    @GetMapping("/myPageEditProfile")
+    @GetMapping("myPageEditProfile")
     public String myPageEditProfile(Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         Long userNumber = (Long) session.getAttribute("userNumber");
         UserVO sessionUser = userRepository.findById(userNumber).get();
         model.addAttribute("userVO", sessionUser);
-        return "/myPage/myPageEditProfile";
+        return "myPage/myPageEditProfile";
     }
 
 
@@ -70,7 +70,7 @@ public class MyPageController {
 
 
     //내 작품 관리
-    @GetMapping("/myPageMyWork")
+    @GetMapping("myPageMyWork")
     public String myPageMyWork(Model model, HttpServletRequest request, @PageableDefault(page = 0, size = 10, sort = "novelNumber", direction = Sort.Direction.DESC) Pageable pageable) {
         HttpSession session = request.getSession();
         Long userNumber = (Long) session.getAttribute("userNumber");
@@ -97,13 +97,13 @@ public class MyPageController {
     //--------------------
 
     //비밀번호 변경----------------
-    @GetMapping("/myPageChangePw")
+    @GetMapping("myPageChangePw")
     public void myPageChangePw() {
         log.info("myPageChangePw");
     }
 
 
-    @PostMapping("/pwChangeForm")
+    @PostMapping("pwChangeForm")
     public RedirectView pwChangeForm(HttpServletRequest request, String userNewPw) {
         HttpSession session = request.getSession();
         Long userNumber = (Long) session.getAttribute("userNumber");
@@ -114,7 +114,7 @@ public class MyPageController {
     }
 
 
-    @PostMapping("/pwCheck")
+    @PostMapping("pwCheck")
     @ResponseBody
     public String pwCheck(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -125,7 +125,7 @@ public class MyPageController {
 
     //--------------------------------
     //페이징-문의내역
-    @GetMapping("/myPageQuestion")
+    @GetMapping("myPageQuestion")
     public String myPageQuestion(Model model, HttpServletRequest request, @PageableDefault(page = 0, size = 10, sort = "inquiryNumber", direction = Sort.Direction.DESC) Pageable pageable) {
         HttpSession session = request.getSession();
         Long userNumber = (Long) session.getAttribute("userNumber");
@@ -139,7 +139,7 @@ public class MyPageController {
 
     //-----------------
     //탈퇴(status 1->0으로 변경)
-    @GetMapping("/withDraw")
+    @GetMapping("withDraw")
     public String withDraw(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Long userNumber = (Long) session.getAttribute("userNumber");
@@ -150,13 +150,13 @@ public class MyPageController {
         return "main/index";
     }
 
-    @GetMapping("/myPageQuit")
+    @GetMapping("myPageQuit")
     public void myPageQuit() {
         log.info("myPageQuit");
     }
     //------------
 
-    @GetMapping("/myPagePayList")
+    @GetMapping("myPagePayList")
     public String myPagePayList() {
         log.info("myPagePayList");
         return "myPage/myPagePayList";
@@ -164,10 +164,10 @@ public class MyPageController {
 
 
     //파일 업로드
-    @PostMapping("/uploadAjaxAction")
+    @PostMapping("uploadAjaxAction")
     @ResponseBody //비동기를 처리하는 경우
     public List<UserVO> uploadAjaxPost(MultipartFile[] uploadFile) {
-        String uploadFolder = "C:/stelling";
+        String uploadFolder = "/home/ubuntu/stelling/upload/";
         List<UserVO> fileList = new ArrayList<>();
 
         UUID uuid = UUID.randomUUID();
@@ -211,10 +211,10 @@ public class MyPageController {
     }
 
     //이미지 보여주기
-    @GetMapping("/display")
+    @GetMapping("display")
     @ResponseBody
     public byte[] getFile(String fileName) throws IOException {
-        return FileCopyUtils.copyToByteArray(new File("C:/stelling/" + fileName));
+        return FileCopyUtils.copyToByteArray(new File("/home/ubuntu/stelling/upload/" + fileName));
     }
 
 

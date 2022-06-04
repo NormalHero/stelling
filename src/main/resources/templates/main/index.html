@@ -31,7 +31,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <body>
 <!-- 헤더 시작 -->
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 
 <!--헤더 이미지-->
 <div id="headerImgWrap" >
@@ -44,16 +44,17 @@
         <script>
 
 
-            let img =search()
+            // let img =search()
+            let mainBanner = ['mainBanner01.png', 'mainBanner02.png', 'mainBanner03.png','mainBanner04.png','mainBanner05.png','mainBanner06.png'];
 
-
-            img?.map((imgs,index)=>{
-                let fileCallpath = imgs.novelUploadPath + "/" + imgs.novelFileName;
+            mainBanner?.map((imgs,index)=>{
+                // let fileCallpath = imgs.novelUploadPath + "/" + imgs.novelFileName;
+                let fileCallpath = "/images/fix/" + mainBanner[index];
                 let img= document.createElement('img');
-                img.src=`/main/display?fileName=` + fileCallpath;
+                img.src = fileCallpath;
                 img.className=`banner_img${index} banner_img ${imgs.id} `
                 img.id=`imgss`
-                document.querySelector(".M_banner_list").innerHTML += `<img src = /main/display?fileName=${fileCallpath} class="banner_img${index} banner_img" id="imgss">`;
+                document.querySelector(".M_banner_list").innerHTML += `<img src = ${fileCallpath} class="banner_img${index} banner_img" id="imgss">`;
 
             })
 
@@ -74,24 +75,24 @@
 </div>
 
 
-<div class="M_Hot_area" >
-    <h2>
+<div  id="main_title_area" class="M_Hot_area" >
+    <h2 >
         <div class="M_Hot_area_tittle">
             <span>실시간</span> <span class="RealTime">HOT</span>
         </div>
     </h2>
     <div class="M_tags_area">
         <div class="M_tags" >
-            <a class="M_tags"  value="28" href="searchAll"> <span th:classappend="${mainCriteria.keyword== 'searchAll'} ? 'menuActive' : ''" class="tagspan" value="all"  > 전체</span></a>
-            <a class="M_tags" href="판타지"><span th:classappend="${mainCriteria.keyword== '판타지'} ? 'menuActive' : ''" class="tagspan " value="판타지" >  판타지</span></a>
-            <a class="M_tags" href="무협"> <span th:classappend="${mainCriteria.keyword== '무협'} ? 'menuActive' : ''" class="tagspan " value="무협" > 무협</span></a>
-            <a class="M_tags" href="현대"><span th:classappend="${mainCriteria.keyword== '현대'} ? 'menuActive' : ''" class="tagspan " value="현대" > 현대</span></a>
-            <a class="M_tags" href="로맨스"><span th:classappend="${mainCriteria.keyword== '로맨스'} ? 'menuActive' : ''" class="tagspan " value="로멘스" > 로맨스</span></a>
-            <a class="M_tags" href="현대판타지"><span th:classappend="${mainCriteria.keyword== '현대판타지'} ? 'menuActive' : ''" class="tagspan " value="현대판타지" >  현대판타지</span></a>
-            <a class="M_tags" href="라이트노벨"><span th:classappend="${mainCriteria.keyword== '라이트노벨'} ? 'menuActive' : ''" class="tagspan " value="라이트노벨" >  라이트노벨</span></a>
-            <a class="M_tags" href="공포"><span th:classappend="${mainCriteria.keyword== '공포'} ? 'menuActive' : ''" class="tagspan " value="공포" > 공포</span></a>
-            <a class="M_tags" href="SF"><span th:classappend="${mainCriteria.keyword== 'SF'} ? 'menuActive' : ''" class="tagspan " value="SF" > SF</span></a>
-            <a class="M_tags" href="스포츠"><span th:classappend="${mainCriteria.keyword== '스포츠'} ? 'menuActive' : ''" class="tagspan " value="스포츠" > 스포츠</span></a>
+            <a class="M_tags"  value="28" href="searchAll#main_title_area"> <span th:classappend="${mainCriteria.keyword== 'searchAll'} ? 'menuActive' : ''" class="tagspan" value="all"  > 전체</span></a>
+            <a class="M_tags" href="판타지#main_title_area"><span th:classappend="${mainCriteria.keyword== '판타지'} ? 'menuActive' : ''" class="tagspan " value="판타지" >  판타지</span></a>
+            <a class="M_tags" href="무협#main_title_area"> <span th:classappend="${mainCriteria.keyword== '무협'} ? 'menuActive' : ''" class="tagspan " value="무협" > 무협</span></a>
+            <a class="M_tags" href="현대#main_title_area"><span th:classappend="${mainCriteria.keyword== '현대'} ? 'menuActive' : ''" class="tagspan " value="현대" > 현대</span></a>
+            <a class="M_tags" href="로맨스#main_title_area"><span th:classappend="${mainCriteria.keyword== '로맨스'} ? 'menuActive' : ''" class="tagspan " value="로멘스" > 로맨스</span></a>
+            <a class="M_tags" href="현대판타지#main_title_area"><span th:classappend="${mainCriteria.keyword== '현대판타지'} ? 'menuActive' : ''" class="tagspan " value="현대판타지" >  현대판타지</span></a>
+            <a class="M_tags" href="라이트노벨#main_title_area"><span th:classappend="${mainCriteria.keyword== '라이트노벨'} ? 'menuActive' : ''" class="tagspan " value="라이트노벨" >  라이트노벨</span></a>
+            <a class="M_tags" href="공포#main_title_area"><span th:classappend="${mainCriteria.keyword== '공포'} ? 'menuActive' : ''" class="tagspan " value="공포" > 공포</span></a>
+            <a class="M_tags" href="SF#main_title_area"><span th:classappend="${mainCriteria.keyword== 'SF'} ? 'menuActive' : ''" class="tagspan " value="SF" > SF</span></a>
+            <a class="M_tags" href="스포츠#main_title_area"><span th:classappend="${mainCriteria.keyword== '스포츠'} ? 'menuActive' : ''" class="tagspan " value="스포츠" > 스포츠</span></a>
 
 
 
@@ -115,12 +116,13 @@
                     <a th:href="@{/novel/novelRoundList(novelNumber=*{novelNumber})}"><img th:src="'/upload/display?fileName='+*{novelUploadPath}+'/'+*{novelFileName}" style="width: 90px;"></a>
                     <div style="margin-left: 15px; line-height: 1;">
                         <b th:text="${index.count}"></b><span th:text="*{novelTitle}" style="margin-left: 8px;"></span>
-                        <p th:text="*{userNickName}">서은하</p>
-                        <p th:text="*{novelHashtag}">#판타지 #현대 #착각 #후회 #집착 #피폐 #히어로</p>
+                        <p th:text="*{userNickName}"></p>
+                        <p th:text="*{novelHashtag}"></p>
                     </div>
                 </li>
                 </th:block>
             </ul>
+                <p th:if="${#lists.size(likeCountList) == 0} ">현재 조회된 결과가 없습니다.</p>
             </div>
             <div class="tags_container tags_left">
 
@@ -128,7 +130,7 @@
 
         <div class="tags_List">
             <div class="tags_header">
-                <span>선호작수</span>
+                <span>좋아요순</span>
             </div>
             <div class="tags_container tags_middle" >
                 <ul>
@@ -137,12 +139,14 @@
                             <a th:href="@{/novel/novelRoundList(novelNumber=*{novelNumber})}"><img th:src="'/upload/display?fileName='+*{novelUploadPath}+'/'+*{novelFileName}" style="width: 90px;"></a>
                             <div style="margin-left: 15px; line-height: 1;">
                                 <b th:text="${index.count}"></b><span th:text="*{novelTitle}" style="margin-left: 8px;"></span>
-                                <p th:text="*{userNickName}">서은하</p>
-                                <p th:text="*{novelHashtag}">#판타지 #현대 #착각 #후회 #집착 #피폐 #히어로</p>
+                                <p th:text="*{userNickName}"></p>
+                                <p th:text="*{novelHashtag}"></p>
                             </div>
                         </li>
                     </th:block>
+
                 </ul>
+                    <p th:if="${#lists.size(likeCountList) == 0} ">현재 조회된 결과가 없습니다.</p>
             </div>
         </div>
 
@@ -156,12 +160,13 @@
                             <a th:href="@{/novel/novelRoundList(novelNumber=*{novelNumber})}"><img th:src="'/upload/display?fileName='+*{novelUploadPath}+'/'+*{novelFileName}" style="width: 90px;"></a>
                             <div style="margin-left: 15px; line-height: 1;">
                                 <b th:text="${index.count}"></b><span th:text="*{novelTitle}" style="margin-left: 8px;"></span>
-                                <p th:text="*{userNickName}">서은하</p>
-                                <p th:text="*{novelHashtag}">#판타지 #현대 #착각 #후회 #집착 #피폐 #히어로</p>
+                                <p th:text="*{userNickName}"></p>
+                                <p th:text="*{novelHashtag}"></p>
                             </div>
                         </li>
                     </th:block>
                 </ul>
+                <p th:if="${#lists.size(likeCountList) == 0} ">현재 조회된 결과가 없습니다.</p>
             </div>
         </div>
 
@@ -199,7 +204,7 @@
     </div>
 
 
-    <div class="M_x_">
+<!--    <div class="M_x_">
         <div class="x_title">
             <div>
                 <div style="margin-right: 797px;">완결작!
@@ -216,16 +221,16 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div>-->
 
-
+<!--
     <div style="background-color: beige">
         <div class="M_x_">
             <div class="x_title">
                 <div style="position: absolute; top: 23px;">한번쯤은 보게될걸?
                         <span>Illustrator</span>
                 </div>
-                <!--일러스트 슬라이드-->
+                &lt;!&ndash;일러스트 슬라이드&ndash;&gt;
             <div class="x_box fourList movemove" id="fourList" ></div>
         </div>
     </div>
@@ -235,10 +240,10 @@
 
 
 
-</div>
-</div>
+</div>-->
+ </div>
 </body>
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 <script src="/assets/js/main/index.js"></script>
 <script src="/assets/js/fix/header.js"></script>
 <script th:inline="javascript">

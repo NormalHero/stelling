@@ -17,7 +17,7 @@ public class SupportService{
     private final SupportDAO supportDAO;
 
     //후원 내역
-    public List<SupportVO> getSupportList(Paging paging, Long userNumber) {return supportDAO.getSuppotList(paging, userNumber);}
+    public List<SupportVO> getSupportList(Paging paging, Long userNumber) {return supportDAO.getSupportList(paging, userNumber);}
 
     public void register(SupportVO supportVO) {supportDAO.register(supportVO);}
 

@@ -14,7 +14,7 @@
 <body>
 
 <!-- 헤더 시작 -->
-<th:block th:insert="/fix/headerWordIllust.html :: headIllustFragment"/>
+<th:block th:insert="fix/headerWordIllust.html :: headIllustFragment"/>
 
 <!--헤더 이미지-->
 <!--<div id="headerImgWrap" >
@@ -131,7 +131,7 @@
                 <a th:href="@{/illust/illustUserPage(userNumber=${profile.userNumber})}">
                     <div class="center cre">
                         <div class="illustratorProfile">
-                            <img th:src="'/illust/illustImg?fileName='+${profile.userFilePath}+'/'+${profile.userFileName}"/>
+                            <img th:src="'/upload/display?fileName='+${profile.userFilePath}+'/'+${profile.userUuid}+'_'+${profile.userFileName}"/>
                         </div>
                         <p th:text="${profile.userNickName}">zzang_9</p>
                     </div>
@@ -259,7 +259,7 @@
 </div>
 
 
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

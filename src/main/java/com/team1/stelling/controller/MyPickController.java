@@ -17,7 +17,7 @@ public class MyPickController {
 
     private final MyPickService myPickService;
 
-    @PostMapping("/register")
+    @PostMapping("register")
     public void register(MyPickDTO myPickDTO) {
         myPickService.register(myPickDTO);
     }

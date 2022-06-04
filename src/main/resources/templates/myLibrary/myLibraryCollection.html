@@ -27,7 +27,7 @@
 </style>
 <body class="is-preload">
 <!-- 헤더 시작 -->
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 
 <!--헤더 이미지-->
 <div id="headerImgWrap" >
@@ -113,7 +113,7 @@
                         <div class="item-button" style="margin-top: 3em;">
                             <ul class="tag-title">
                                 <li><a href="#" class="btn-view tag-list">보러가기</a></li>
-                                <li><a th:href="@{/novel/novelDetailView(novelNumber=${pick.novelVO.novelNumber})}" class="btn-view tag-list">보러가기</a></li>
+                                <li><a th:href="@{/novel/novelRoundList(novelNumber=${pick.novelVO.novelNumber})}" class="btn-view tag-list">보러가기</a></li>
                             </ul>
                         </div>
                         <a class="myPickRemove" th:href="${pick.myPickNumber}"><img src="/images/like.png" class="like-img"></a>
@@ -148,7 +148,7 @@
         </section>
     </div>
 </div>
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 
 
 

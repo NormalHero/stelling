@@ -32,7 +32,7 @@ public class MainController {
 
     private final MainService mainService;
 
-    @GetMapping("/bannerImg")
+    @GetMapping("bannerImg")
     @ResponseBody
     public List<NovelDTO> getBannerImg(){
         List<NovelDTO> novelDTO = mainService.getBannerImg();
@@ -40,7 +40,7 @@ public class MainController {
         return novelDTO;
     }
 
-    @GetMapping("/illustImg")
+    @GetMapping("illustImg")
     @ResponseBody
     public List<NewIllustDTO> getIllustImg(){
         List<NewIllustDTO> illustDTO = mainService.getNewIllustList();
@@ -48,7 +48,7 @@ public class MainController {
         return illustDTO;
     }
 
-    @GetMapping("/index")
+    @GetMapping("index")
     public void index(Model model, MainCriteria mainCriteria){
         //소설 신작
         List<NovelDTO> newWorkList = mainService.getNewNovelList();
@@ -78,7 +78,7 @@ public class MainController {
         model.addAttribute("mainCriteria", mainCriteria);
     }
 
-    @GetMapping("/display")
+    @GetMapping("display")
     public ResponseEntity<byte[]> getImage(String fileName){
 
     File file = new File("c:\\stelling\\" + fileName);

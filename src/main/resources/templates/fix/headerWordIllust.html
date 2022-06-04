@@ -10,7 +10,6 @@
                     <a id="logoImg" href="/illust/illustList"><img src="/images/fix/logoIcon_d.png"></a>
                     <ul class="navGroup web_header">
                         <li><a class="headerActive" href="/illust/illustProfileCheck2">마이포스트 </a></li>
-                        <li><a class="headerActive" href="/illust/chatForm">CHAT</a></li>
                         <li><a class="headerActive" href="/novel/category/novelCategory">소설</a></li>
                     </ul>
                 </div>
@@ -39,7 +38,7 @@
                                         <img src="/images/fix/img_profile.png" alt="프로필사진">
                                         <div><a href="/myLibrary/myLibraryCollection/myPick" th:text="${session.user.userNickName}"></a>님</div>
                                     </div>
-                                    <a class="menu_logout"  href="#">로그아웃</a>
+                                    <a class="menu_logout"  href="/user/logOut">로그아웃</a>
                                 </div>
                                 <div class="header_pay">
                                     <div class="coinWrap">
@@ -67,7 +66,6 @@
                                 <div class="menu_my">
                                     <ul class="menu_my_list">
                                         <li><img class="menu_icon" src="/images/fix/header_menu_people.png"><a href="/myPage/myPageEditProfile">마이페이지</a></li>
-                                        <li><img class="menu_icon" src="/images/fix/header_menu_graph.png"><a href="/myPage/myPageMyWork">정산/통계</a></li>
                                     </ul>
                                 </div>
                                 <div class="menu_com">

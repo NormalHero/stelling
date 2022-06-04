@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class EtcController {
 
-    @GetMapping("/agree")
+    @GetMapping("agree")
     public void agree(){
     }
 
-    @GetMapping("/privacy")
+    @GetMapping("privacy")
     public void privacy(){
     }
 }

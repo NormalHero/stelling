@@ -10,7 +10,7 @@
 </head>
 <body>
 <!-- 헤더 시작 -->
-<th:block th:insert="/fix/headerWordIllust.html :: headIllustFragment"/>
+<th:block th:insert="fix/headerWordIllust.html :: headIllustFragment"/>
 
 <!--헤더 이미지-->
 <!--<div id="headerImgWrap" >
@@ -73,7 +73,7 @@
         <div class="profileBox">
             <div class="profilepic">
 
-                <img th:src="'/illust/illustImg?fileName='+*{userVO.userFilePath}+'/'+*{userVO.userFileName}" width="100%" height="100%" class="img"/>
+                <img th:src="'/upload/display?fileName='+*{userVO.userFilePath}+'/'+*{userVO.userUuid}+'_'+*{userVO.userFileName}"  width="100%" height="100%" class="img"/>
             </div>
             <div>
             <span class="userNick" th:text="*{userVO.userNickName}">yewon_s</span>
@@ -133,7 +133,7 @@
 
 
 </div>
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 </body>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script th:inline="javascript">

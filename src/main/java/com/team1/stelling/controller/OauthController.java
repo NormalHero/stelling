@@ -36,7 +36,7 @@ public class OauthController {
     //    @Autowired
     private final UserService userService;
 
-    @GetMapping("/oauth")
+    @GetMapping("oauth")
     public @ResponseBody
     RedirectView kakaoCallback(String code, HttpServletRequest request) throws IOException {
 

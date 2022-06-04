@@ -55,7 +55,7 @@ public class novelRoundController {
 
 
     //저장된 소설 표지 가져오기
-    @GetMapping("/novelRegisterImg")
+    @GetMapping("novelRegisterImg")
     @ResponseBody
     public byte[] getFile(String fileName) throws IOException{
         return FileCopyUtils.copyToByteArray(new File("/home/ubuntu/stelling/upload/" + fileName));
@@ -63,7 +63,7 @@ public class novelRoundController {
 
 
 
-    @GetMapping("/novelRoundList")
+    @GetMapping("novelRoundList")
     public void getSubNovel(Long novelNumber, @PageableDefault(page = 0, size = 10, sort = "subNovelNumber" ,direction = Sort.Direction.ASC) Pageable pageable, HttpServletRequest request, Model model){
         NovelVO novelVO = novelService.get(novelNumber);
         Page<SubNovelVO> subNovelVOS = subNovelService.getListByNovelNumber(novelNumber,pageable);
@@ -147,7 +147,7 @@ public class novelRoundController {
         return "삭제성공";
     }
 
-    @GetMapping("/myPick")
+    @GetMapping("myPick")
     @ResponseBody
     public String novelPick(int num, Long novelNumber, Long userNumber){
         if(num==1) {

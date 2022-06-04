@@ -34,7 +34,7 @@ public class NovelCategoryDTO {
 
     public void setNovelHashtag(String novelHashtag) {
         if(!Objects.isNull(novelHashtag)){
-            this.novelHashtag = novelHashtag.split(",");
+            this.novelHashtag = novelHashtag.split(" ");
         }else {
             this.novelHashtag =null;
         }

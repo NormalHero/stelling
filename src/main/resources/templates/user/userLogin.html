@@ -10,7 +10,7 @@
     <title>Login</title>
 </head>
 <body style="max-witdh:1200px ;">
-<th:block th:insert="/fix/headerWord.html :: headFragment"/>
+<th:block th:insert="fix/headerWord.html :: headFragment"/>
 <div id="headerImgWrap" >
     <img id="headerImg"src="/images/fix/headerImg_3.png" >
 </div>
@@ -33,7 +33,7 @@
                     <div>
                         <div class="social_logo">
                             <button class='btn-social-login' style='background:#1FC700'><i class="xi-3x xi-naver"></i></button>
-                            <button type="button" class='btn-social-login' onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=427b7ad60b17680502910b084533fbaa&redirect_uri=http://localhost:8989/user/oauth&response_type=code';" style='background:#FFEB00'><i class="xi-3x xi-kakaotalk text-dark"></i></button>
+                            <button type="button" class='btn-social-login' onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=427b7ad60b17680502910b084533fbaa&redirect_uri=/user/oauth&response_type=code';" style='background:#FFEB00'><i class="xi-3x xi-kakaotalk text-dark"></i></button>
                             <button class='btn-social-login' style='background:#4267B2'><i class="xi-3x xi-facebook"></i></button>
                             <button class='btn-social-login'><i class="xi-3x xi-apple text-dark"></i></button>
                         </div>
@@ -41,7 +41,7 @@
                     <button id="loginBtn" class="login_button" type="submit">
                         <span class="login_button_text">로그인</span>
                     </button>
-                    <button type="button" onclick="location.href='http://localhost:8989/user/join';" class="join_button" >
+                    <button type="button" onclick="location.href='/user/join';" class="join_button" >
                         <span class="">회원가입</span>
                     </button>
                 </form>
@@ -50,11 +50,11 @@
         </div>
     </div>
 </div>
-<th:block th:insert="/fix/footer.html :: footerFragment"/>
+<th:block th:insert="fix/footer.html :: footerFragment"/>
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="/assets/js/fix/header.js"></script>
 <script src="/assets/js/user/userLogin.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript">
     $("#loginBtn").click(function(){
