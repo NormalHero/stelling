@@ -11,6 +11,7 @@
 
 # 구현 기술 스택 
 - springBoot 
+- JPA
 - MySQL (8.0.27)
 - MyBatis (3.5.9)
 - HTML, CSS, JS
