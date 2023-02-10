@@ -1,5 +1,5 @@
 # stelling
-- http://3.35.208.238:8989/main/index
+- http://3.35.208.238:8989/main/index (인스턴스 종료)
 - 누구나 작가가 되어 소설을 쓰거나 일러스트를 등록 할 수 있다.
 - 프로젝트 협업 레포지토리 : https://github.com/team1-project-stelling/stelling 
 - 프로젝트 이슈 : https://github.com/team1-project-stelling/stelling/issues
